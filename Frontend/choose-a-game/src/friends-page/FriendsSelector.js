@@ -1,15 +1,15 @@
 import './FriendsPage.css';
 import FriendBox from './FriendBox';
-import cooltimes from '../images/cooltimes-icon.jpg';
-import casul from '../images/casul-icon.jpg'; 
-import aishling from '../images/aishling-icon.jpg';
-import jamespellis from '../images/jamespellis-icon.jpg';
 
-function FriendsSelector() {
-  const images = [cooltimes, casul, aishling, jamespellis];
+function FriendsSelector({friendsList, handleToggle}) {
   return (
     <div className='FriendsSelectorContainer'>
-      {images.map(img => <FriendBox imageSrc={img}/>)}
+      {friendsList.slice(0,5).map(friend => <FriendBox 
+        imageSrc={friend.avatarmedium}
+        name={friend.personaname}
+        id={friend.steamid}
+        handleToggle={handleToggle}
+      />)}
     </div>
   );
 }

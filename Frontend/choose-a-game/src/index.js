@@ -15,16 +15,9 @@ ReactDOM.render(
   <React.StrictMode>
     <Router>
       <Switch>
-         <Route path="/friends">
-          <FriendsPage/>
-        </Route> 
-        <Route path="/games">
-          <GamesPage/>
-        </Route>
-        <Route path="">
-          <Home/>
-        </Route>
-      
+        <Route path="/friends" component={FriendsPage}/>
+        <Route path="/games" component={GamesPage}/>
+        <Route path="" component={Home}/>
       </Switch>
     </Router>
   </React.StrictMode>,

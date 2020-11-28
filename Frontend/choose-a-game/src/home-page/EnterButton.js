@@ -1,9 +1,17 @@
 import './Home.css';
+import {
+  Link
+} from "react-router-dom";
 
-function EnterButton() {
+function EnterButton({ accountName }) {
   return ( 
     <div className='EnterButtonContainer'>
-      <a href="/friends" className="EnterButton">Enter</a>
+      <Link to={{
+        pathname: "/friends",
+        state: { accountName }
+      }}>
+        <div className="EnterButton">Enter</div>
+      </Link>
     </div>
   )
 }

@@ -1,9 +1,18 @@
 import './FriendsPage.css';
+import {
+  Link
+} from "react-router-dom";
 
-function NextButton() {
+function NextButton({selectedFriends}) {
+  console.log(selectedFriends)
   return ( 
     <div className='NextButtonContainer'>
-      <a href="/games" className="NextButton">Next</a>
+      <Link to={{
+        pathname: "/games",
+        state: { selectedFriends }
+      }}>
+        <div className="NextButton">Next</div>
+      </Link>
     </div>
   )
 }
