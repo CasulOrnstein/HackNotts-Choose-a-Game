@@ -1,8 +1,20 @@
 import json
 import requests
 
+def getAppInfo(appId):
+    url = f"https://store.steampowered.com/api/appdetails?appids={appId}"
+    try:
+        response = requests.get(url).json()
+        return response[str(appId)]["data"]
+    except:
+        print("Failed to get categories")
+        return {}
+
+
 def getMultiplayerGames(appList):
-    return [getGameInfo(appId) for appId in appList if isTaggedMultiplayer(appId)]
+    apps = [getAppInfo(appId) for appId in appList]
+    multiplayerApps = list(filter(isTaggedMultiplayer, apps))
+    return [getGameInfo(appData) for appData in multiplayerApps]
 
 default_gameInfo = {
     "Online": "4",
@@ -30,19 +42,22 @@ multiplayer_categories = [
     "Cross-Platform Multiplayer"
 ]
 
-def isTaggedMultiplayer(appId):
-    url = f"https://store.steampowered.com/api/appdetails?appids={appId}"
-    categories = []
+def isTaggedMultiplayer(appData):
     try:
-        response = requests.get(url).json()
-        categories_withids = response[str(appId)]["data"]["categories"]
+        categories_withids = appData["categories"]
         categories = [i["description"] for i in categories_withids]
+        is_multiplayer = any(cat in multiplayer_categories for cat in categories)
+        return is_multiplayer
     except:
         print("Failed to get categories")
-    
-    return any(cat in multiplayer_categories for cat in categories)
+        return False
 
-def getGameInfo(appId):
+def getGameInfo(appData):
+    if "steam_appid" not in appData:
+        print("Failed to extract id")
+        return {}
+    
+    appId = appData["steam_appid"]
     maxPlayers = getMaxPlayers(appId)
     output = { 
         "appId": appId,
@@ -52,15 +67,12 @@ def getGameInfo(appId):
         "maxComboPlayers": maxPlayers["Combo"]
     }
 
-    url = f"https://store.steampowered.com/api/appdetails?appids={appId}"
     try:
-        response = requests.get(url).json()
-        gameData = response[str(appId)]["data"]
-
         # Update output 
-        output["headerImage"] = gameData["header_image"] 
-        output["name"] = gameData["name"]
+        output["headerImage"] = appData["header_image"] 
+        output["name"] = appData["name"]
     except:
         print("Failed to lookup game on steam")
+        return {}
     
     return output
