@@ -5,6 +5,7 @@ import json
 from steam.steamid import SteamID
 from steam.webapi import WebAPI
 from APIKey import apiKey
+from ChooseAlgorithm import choose
 
 from steamUtils.getUsersFriends import getUsersFriends
 from steamUtils.getUsersGames import getUsersGames
@@ -36,13 +37,20 @@ def getGames():
     else:
         return "Error: No friends provided. Please specify a name."
 
-    friends_games = {}
+    friends_games = []
     with open('app_cache.json') as json_file:
         appCache = json.load(json_file)
         for friendId in friends:
             games = getUsersGames(apiKey, friendId)
-            friends_games[str(friendId)] = getMultiplayerGames(appCache, games)
+            #playerName = requests.get(SteamID(friendId)).json()['personaname']
+            playerName = str(friendId)
+            friends_games.append({
+                'id' : friendId,
+                'name' : playerName,
+                'games' : getMultiplayerGames(appCache, games)
+                })
 
-    return jsonify(friends_games)
+    chosenGames = choose(friends_games)     
+    return jsonify(chosenGames)
 
-app.run()
+app.run(debug=True, use_reloader=False)

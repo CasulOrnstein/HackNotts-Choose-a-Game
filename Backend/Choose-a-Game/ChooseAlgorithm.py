@@ -52,7 +52,7 @@ def choose(players):
             break
         if (i > 6):
             break
-    return jsonify(topXGames)
+    return topXGames
 
 class PlayScore:
     def __init__(self, playList, score):
