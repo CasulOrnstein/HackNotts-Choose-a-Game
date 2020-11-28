@@ -39,7 +39,7 @@ def choose(players):
         gamesList = []
         for whatPlay in score.playList:
             gameDict = {}
-            gameDict['gamename'] = whatPlay.game['name']
+            gameDict['game'] = whatPlay.game
             gameDict['playerNames'] = []
             for player in whatPlay.players:
                 gameDict['playerNames'].append(player['name'])
