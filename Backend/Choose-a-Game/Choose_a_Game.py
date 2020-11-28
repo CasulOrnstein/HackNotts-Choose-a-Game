@@ -1,6 +1,7 @@
 import flask
 from flask import request, jsonify
 import requests
+import json
 from steam.steamid import SteamID
 from steam.webapi import WebAPI
 from APIKey import apiKey
@@ -29,18 +30,18 @@ def getFriends():
 
 @app.route('/api/games', methods=['GET'])
 def getGames():
+    friends = []
     if 'friends' in request.args:
-        friendsStr = request.args['friends']
+        friends = json.loads(request.args['friends'])
     else:
         return "Error: No friends provided. Please specify a name."
 
-    # friends = friendsStr.split(',')
-    friends = [76561198044229271]
     friends_games = {}
-    for friendId in friends:
-        games = getUsersGames(apiKey, friendId)
-        print(games)
-        friends_games[str(friendId)] = getMultiplayerGames(games)
+    with open('app_cache.json') as json_file:
+        appCache = json.load(json_file)
+        for friendId in friends:
+            games = getUsersGames(apiKey, friendId)
+            friends_games[str(friendId)] = getMultiplayerGames(appCache, games)
 
     return jsonify(friends_games)
 
