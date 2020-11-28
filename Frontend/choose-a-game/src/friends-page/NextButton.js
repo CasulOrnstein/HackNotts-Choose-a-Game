@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 
 function NextButton({selectedFriends}) {
-  console.log(selectedFriends)
   return ( 
     <div className='NextButtonContainer'>
       <Link to={{

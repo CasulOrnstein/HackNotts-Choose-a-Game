@@ -39,7 +39,7 @@ def getFriends():
 def getGames():
     friends = []
     if 'friends' in request.args:
-        friends = json.loads(request.args['friends'])
+        friends = request.args['friends'].split(',')
     else:
         return "Error: No friends provided. Please specify a name."
 

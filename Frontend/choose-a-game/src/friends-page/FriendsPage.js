@@ -37,7 +37,7 @@ function FriendsPage(props) {
   return (
     <div className='FriendsPageContainer'>
       <FriendsSelector friendsList={friendsList} handleToggle={addRemoveFriendId}/>
-      <NextButton/>
+      <NextButton selectedFriends={selectedFriends}/>
     </div>
   );
 }
