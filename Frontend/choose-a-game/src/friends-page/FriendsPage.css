@@ -1,0 +1,69 @@
+.FriendsPageContainer {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+  
+}
+
+.FriendsSelectorContainer {
+  background-color: white;
+  height: 50vh;
+  width: 30vw;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.FriendBox {
+  height: 20vh;
+  width: 20vw;
+  margin-left: 10px;
+  margin-right: 10px;
+  text-align: right;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  background-color: teal;
+  margin-bottom: 10px;
+}
+
+.Image {
+  width: 20%;
+  padding: 5px 10px;
+}
+
+.FriendBoxText {
+  margin-left: 20px;
+}
+
+.NextButtonContainer {
+  height: 10vh;
+  width: 10vw;
+  margin-top: 10vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.NextButton {
+background-color: #13e748;
+border: none;
+color: white;
+padding: 15px 32px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 30px;
+margin: 4px 2px;
+cursor: pointer;
+width: 80%;
+border-radius: 5px;
+}
+
