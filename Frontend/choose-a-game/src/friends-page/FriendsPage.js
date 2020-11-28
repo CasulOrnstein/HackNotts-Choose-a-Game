@@ -2,6 +2,7 @@ import './FriendsPage.css';
 import FriendsSelector from './FriendsSelector';
 import NextButton from './NextButton';
 import axios from 'axios'
+import LoadingScreen from '../loading-screen/loading'
 
 import {useEffect, useState} from 'react'
 
@@ -30,7 +31,7 @@ function FriendsPage(props) {
   }, [accountName]);
   if (friendsList === undefined) {
     return (
-      <div>Loading</div>
+      <LoadingScreen text="Listing all your friends!"/>
     );
   }
 

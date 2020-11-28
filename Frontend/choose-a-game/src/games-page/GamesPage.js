@@ -1,5 +1,6 @@
 import './GamesPage.css';
 import GamesBox from './GamesBox.js';
+import LoadingScreen from '../loading-screen/loading'
 import axios from 'axios'
 
 import {useEffect, useState} from 'react'
@@ -21,7 +22,7 @@ function GamesPage(props) {
 
   if (gamesList === undefined) {
     return (
-      <div>Loading</div>
+      <LoadingScreen text="Finding games for you all to play!"/>
     );
   }
 
