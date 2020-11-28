@@ -7,12 +7,12 @@ def choose(players):
     # "all" in the context of users selected + the games they play
     allGames = {}
     allPlayers = {}
-    for playerId in players:
+    for player in players:
         gameIds = []
-        for game in playerId.games:
-            allGames[game.id] = game
-            gameIds.append(game.id)
-        allPlayers[playerId.id] = {'name' : playerId.name, 'gameIds' : gameIds }
+        for game in player['games']:
+            allGames[game['appId']] = game
+            gameIds.append(game['appId'])
+        allPlayers[player['id']] = {'name' : player['name'], 'gameIds' : gameIds }
 
     scores = chooseHelper(allPlayers, allGames, [], 0)
     random.shuffle(scores)
@@ -39,10 +39,10 @@ def choose(players):
         gamesList = []
         for whatPlay in score.playList:
             gameDict = {}
-            gameDict['gamename'] = whatPlay.game.name
+            gameDict['gamename'] = whatPlay.game['name']
             gameDict['playerNames'] = []
             for player in whatPlay.players:
-                gameDict['playerNames'].append(player.name)
+                gameDict['playerNames'].append(player['name'])
             gamesList.append(gameDict)
             gamesPrinted.append(whatPlay.game)
 
@@ -67,20 +67,19 @@ class WhatPlay:
 def chooseHelper(players, games, playList, i):
     scores = [] 
     foundNone = True
-    for game in games:
-        playersThatPlayThisGame = [p for p in players if game.id in p.gameIds]
-        playerRange = range(2, game.maxOnlinePlayers + 1)
+    for gameid, game in games.items():
+        playersThatPlayThisGame = [pid for pid, player in players.items() if game['appId'] in player['gameIds']]
+        playerRange = range(2, int(game['maxOnlinePlayers']) + 1)
         for numPlayers in playerRange:
             for comb in itertools.combinations(playersThatPlayThisGame, numPlayers):
                 foundNone = False
-                remainingPlayers = [p for p in players if p not in comb]
                 remainingPlayers = players.copy()
-                for player in comb:
-                    remainingPlayers.remove(player)
+                for pid in comb:
+                    del remainingPlayers[pid]
                 remainingGames = games.copy()
-                remainingGames.remove(game)
+                del remainingGames[gameid]
                 nextPlayList = playList.copy()
-                nextPlayList.append(WhatPlay(game, comb))
+                nextPlayList.append(WhatPlay(game, [players[pid] for pid in comb]))
                 scores += chooseHelper(remainingPlayers, remainingGames, nextPlayList, i + 1)
     if foundNone == True:
         scores.append(PlayScore(playList, (len(players) * 100) - len(games)))
