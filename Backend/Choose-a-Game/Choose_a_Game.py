@@ -21,6 +21,11 @@ def api_name():
     else:
         return "Error: No name provided. Please specify a name."
 
+    if 'includeoffline' in request.args:
+        includeOffline = int(request.args['includeoffline']) != 0
+    else:
+        includeOffline = False
+
     steamId = SteamID.from_url('https://steamcommunity.com/id/' + name)
 
     api.ISteamWebAPIUtil.GetServerInfo()
@@ -38,50 +43,22 @@ def api_name():
     # Convert the list/array to a comma-separated list of Steam user IDs for the API to retrieve.
     joinedsids = ','.join(steamidlist)
 
-    ## Function I wrote to print out friend data in json format.
-    #+ call the function printFriendInfo() by passing a comma-separated
-    #+ list of SteamID64 IDs, e.g. (the following IDs are fake):
-    #+      printFriendInfo(09812409,234890234,0982130)
-    def getFriendInfo(ids):
-        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKey.theapi + '&steamids=' + ids
-        userget = requests.get(userurl).json()['response']
-        return userget
+    userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKey.theapi + '&steamids=' + joinedsids
+    userget = requests.get(userurl).json()['response']
 
-    # This function gets 
-    def printOnlineFriends(ids):
-        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKey.theapi + '&steamids=' + ids
-        userget = requests.get(userurl).json()['response']
+    friendsRet = []
+    for i in range(len(userget['players'])):
+        online = userget['players'][i]['personastate']
+        if (online == 1 or includeOffline):
+            friend = {}
+            friend["personaname"] = userget['players'][i]['personaname']
+            friend["steamid"] = userget['players'][i]['steamid']
+            friend["avatarmedium"] = userget['players'][i]['avatarmedium']
+            friendsRet.append(friend)
+        else:
+            # not online and not playing a game. continue to the next friend
+            continue
 
-        onlineDict = {}
-        global maxnamelen
-        maxnamelen = 0
-        for i in range(len(userget['players'])):
-            tonli = userget['players'][i]['personastate']
-            if tonli == 1:
-                #They're online. Are they playing a game? Does the 'gameextrainfo' key exist?
-                if 'gameextrainfo' in userget['players'][i]:
-                    sname = userget['players'][i]['personaname']
-                    sgame = userget['players'][i]['gameextrainfo']
-                    onlineDict.update( {sname : sgame} )
-                    if len(sname) > maxnamelen:
-                        maxnamelen = int(len(sname))
-                # onlineArray.append(userget['players'][i]['personaname'])
-            else:
-                # not online and not playing a game. continue to the next friend
-                continue
-    
-        sortDict = sorted(onlineDict.items(), key=lambda z: z[1])
-        for i in sorted (onlineDict.keys()):
-        # for i in sorted (sortDict):
-            tspaces = ""
-            lennamediff = (maxnamelen - len(i)) + 2
-            for x in range(lennamediff):
-                tspaces += ' '
-            print(i + tspaces, "[" + onlineDict[i] + "]")
-            # END printOnlineFriends
-
-    
-
-    return getFriendInfo(joinedsids)
+    return jsonify(friendsRet)
 
 app.run()
