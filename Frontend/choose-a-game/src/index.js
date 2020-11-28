@@ -9,6 +9,7 @@ import {
   Route,
 } from "react-router-dom";
 import FriendsPage from './friends-page/FriendsPage';
+import GamesPage from 'games-page/GamesPage';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,6 +18,9 @@ ReactDOM.render(
          <Route path="/friends">
           <FriendsPage/>
         </Route> 
+        <Route path="/games">
+          <GamesPage/>
+        </Route>
         <Route path="">
           <Home/>
         </Route>
