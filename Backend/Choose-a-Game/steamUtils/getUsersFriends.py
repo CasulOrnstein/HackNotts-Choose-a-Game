@@ -33,4 +33,7 @@ def getUsersFriends(apiKey, userId, includeOffline = False):
             # not online and not playing a game. continue to the next friend
             continue
 
-    return friendsRet
+    dictOut = {}
+    dictOut['friends'] = friendsRet
+    dictOut['thisuserid'] = steamId
+    return dictOut
