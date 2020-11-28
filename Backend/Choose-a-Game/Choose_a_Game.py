@@ -3,11 +3,11 @@ from flask import request, jsonify
 import requests
 from steam.steamid import SteamID
 from steam.webapi import WebAPI
+import APIKey
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
-theapi = "96E0B2A6BBCF8793BDC4619BABEB6C59"
-api = WebAPI(key=theapi)
+api = WebAPI(key=APIKey.theapi)
 
 @app.route('/', methods=['GET'])
 def home():
@@ -26,7 +26,7 @@ def api_name():
     api.ISteamWebAPIUtil.GetServerInfo()
     res = api.call('ISteamWebAPIUtil.GetServerInfo')
 
-    theurl = 'http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=' + theapi + '&steamid=' + str(steamId) + '&relationship=friend'
+    theurl = 'http://api.steampowered.com/ISteamUser/GetFriendList/v0001/?key=' + APIKey.theapi + '&steamid=' + str(steamId) + '&relationship=friend'
 
     friendlist = requests.get(theurl).json()['friendslist']['friends']
 
@@ -43,15 +43,13 @@ def api_name():
     #+ list of SteamID64 IDs, e.g. (the following IDs are fake):
     #+      printFriendInfo(09812409,234890234,0982130)
     def getFriendInfo(ids):
-        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + theapi + '&steamids=' + ids
+        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKey.theapi + '&steamids=' + ids
         userget = requests.get(userurl).json()['response']
         return userget
-        #for i in range(len(userget['players'])):
-        #    print(userget['players'][i])
 
     # This function gets 
     def printOnlineFriends(ids):
-        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + theapi + '&steamids=' + ids
+        userurl = 'http://api.steampowered.com/ISteamUser/GetPlayerSummaries/v0002/?key=' + APIKey.theapi + '&steamids=' + ids
         userget = requests.get(userurl).json()['response']
 
         onlineDict = {}
@@ -81,6 +79,8 @@ def api_name():
                 tspaces += ' '
             print(i + tspaces, "[" + onlineDict[i] + "]")
             # END printOnlineFriends
+
+    
 
     return getFriendInfo(joinedsids)
 
