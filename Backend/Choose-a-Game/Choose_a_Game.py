@@ -10,6 +10,7 @@ from ChooseAlgorithm import choose
 from steamUtils.getUsersFriends import getUsersFriends
 from steamUtils.getUsersGames import getUsersGames
 from steamUtils.getMultiplayerGames import getMultiplayerGames
+from getUsersNames import getUsersNames
 
 app = flask.Flask(__name__)
 app.config["DEBUG"] = True
@@ -38,15 +39,14 @@ def getGames():
         return "Error: No friends provided. Please specify a name."
 
     friends_games = []
+    usernames = getUsersNames(friends)
     with open('app_cache.json') as json_file:
         appCache = json.load(json_file)
         for friendId in friends:
             games = getUsersGames(apiKey, friendId)
-            #playerName = requests.get(SteamID(friendId)).json()['personaname']
-            playerName = str(friendId)
             friends_games.append({
                 'id' : friendId,
-                'name' : playerName,
+                'name' : usernames[friendId],
                 'games' : getMultiplayerGames(appCache, games)
                 })
 

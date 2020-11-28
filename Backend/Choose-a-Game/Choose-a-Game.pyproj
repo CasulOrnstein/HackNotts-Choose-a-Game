@@ -28,9 +28,13 @@
     <Compile Include="APIKey.py">
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="getMultiplayerGames.py" />
-    <Compile Include="getUsersFriends.py" />
-    <Compile Include="getUsersGames.py" />
+    <Compile Include="getUsersNames.py" />
+    <Compile Include="steamUtils\getMultiplayerGames.py" />
+    <Compile Include="steamUtils\getUsersFriends.py" />
+    <Compile Include="steamUtils\getUsersGames.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="steamUtils\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
