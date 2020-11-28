@@ -5,7 +5,6 @@ function GamesBox({ImageSrc}) {
   return ( 
     <div className='GamesBoxContainer'>
      <img src={ImageSrc} className='Logo'/>
-
     </div>
   )
 }
