@@ -2,21 +2,19 @@ import random
 import itertools
 from flask import jsonify
 
-# Input: list of friends { id, name } (including user), each with a list of multiplayer games {id, name} they play
+# Input: list of friends { id, name, games } (including user), each with a list of games {id, name, maxCount} they play
 def choose(players):
     # "all" in the context of users selected + the games they play
     allGames = {}
     allPlayers = {}
-    allGameIds = set()
-    allPlayerIds = []
     for playerId in players:
+        gameIds = []
         for game in playerId.games:
-            allGameIds.add(game.id)
             allGames[game.id] = game
-        allPlayerIds.append(playerId.id)
-        allPlayers[playerId.id] = playerId.name
+            gameIds.append(game.id)
+        allPlayers[playerId.id] = {'name' : playerId.name, 'gameIds' : gameIds }
 
-    scores = chooseHelper(allPlayerIds, allGameIds, [], 0)
+    scores = chooseHelper(allPlayers, allGames, [], 0)
     random.shuffle(scores)
     scores.sort(key=lambda x:x.score, reverse = False)
 
@@ -41,10 +39,10 @@ def choose(players):
         gamesList = []
         for whatPlay in score.playList:
             gameDict = {}
-            gameDict['game'] = allGames[whatPlay.game]
-            gameDict['players'] = []
-            for playerId in whatPlay.players:
-                gameDict['players'].append(allPlayers[playerId])
+            gameDict['gamename'] = whatPlay.game.name
+            gameDict['playerNames'] = []
+            for player in whatPlay.players:
+                gameDict['playerNames'].append(player.name)
             gamesList.append(gameDict)
             gamesPrinted.append(whatPlay.game)
 
@@ -70,13 +68,17 @@ def chooseHelper(players, games, playList, i):
     scores = [] 
     foundNone = True
     for game in games:
-        playersThatPlayThisGame = [p for p in players if game in p.games]
-        playerRange = game.playerRange() ## TODO
+        playersThatPlayThisGame = [p for p in players if game.id in p.gameIds]
+        playerRange = range(2, game.maxOnlinePlayers + 1)
         for numPlayers in playerRange:
             for comb in itertools.combinations(playersThatPlayThisGame, numPlayers):
                 foundNone = False
                 remainingPlayers = [p for p in players if p not in comb]
-                remainingGames = [g for g in games if not g == game]
+                remainingPlayers = players.copy()
+                for player in comb:
+                    remainingPlayers.remove(player)
+                remainingGames = games.copy()
+                remainingGames.remove(game)
                 nextPlayList = playList.copy()
                 nextPlayList.append(WhatPlay(game, comb))
                 scores += chooseHelper(remainingPlayers, remainingGames, nextPlayList, i + 1)
