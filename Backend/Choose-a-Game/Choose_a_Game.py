@@ -14,7 +14,7 @@ def home():
     return "<h1>Distant Reading Archive</h1><p>This site is a prototype API for distant reading of science fiction novels.</p>"
 
 # A route to return all of the available entries in our catalog.
-@app.route('/api/games', methods=['GET'])
+@app.route('/api/friends', methods=['GET'])
 def api_name():
     if 'name' in request.args:
         name = request.args['name']
@@ -60,5 +60,14 @@ def api_name():
             continue
 
     return jsonify(friendsRet)
+
+@app.route('/api/games', methods=['GET'])
+def api_name():
+    if 'friends' in request.args:
+        friendsStr = request.args['friends']
+    else:
+        return "Error: No friends provided. Please specify a name."
+
+    friends = friendsStr.split(',')
 
 app.run()

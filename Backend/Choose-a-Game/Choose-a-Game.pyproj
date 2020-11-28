@@ -21,10 +21,14 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ChooseAlgorithm.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Choose_a_Game.py" />
     <Compile Include="APIKey.py">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="getMultiplayerGames.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
