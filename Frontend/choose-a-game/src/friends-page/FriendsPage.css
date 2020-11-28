@@ -10,7 +10,6 @@
 }
 
 .FriendsSelectorContainer {
-  background-color: white;
   height: 50vh;
   width: 30vw;
   margin-top: 10vh;
@@ -31,6 +30,7 @@
   justify-content: left;
   background-color: teal;
   margin-bottom: 10px;
+  cursor: pointer;
 }
 
 .Image {
