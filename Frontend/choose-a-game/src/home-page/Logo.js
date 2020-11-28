@@ -1,5 +1,5 @@
 import './Home.css';
-import SteamLogo from '../images/steam-logo.jpg';
+import SteamLogo from '../images/steamlogo.png';
 
 function Logo() {
   return ( 

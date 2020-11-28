@@ -4,8 +4,9 @@ import './GamesPage.css';
 function GamesBox({ImageSrc}) {
   return ( 
     <div className='GamesBoxContainer'>
-     <img src={ImageSrc} className='Logo'/>
-
+     <img src={ImageSrc} className='GamesLogo'/>
+      <div>Game Name:</div>
+      <div>A, B, C own this game</div>
     </div>
   )
 }

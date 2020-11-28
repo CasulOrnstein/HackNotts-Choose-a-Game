@@ -9,7 +9,7 @@ function SteamIDForm({setAccountName}) {
         type="text"
         name="Steam Name"
         className="SteamIDForm"
-        placeholder="e.g. aishlinging"
+        placeholder="e.g. aishling"
         required
         onBlur={(e) => setAccountName(e.target.value)}
       />
