@@ -11,10 +11,32 @@ def getAppInfo(appId):
         return {}
 
 
-def getMultiplayerGames(appList):
-    apps = [getAppInfo(appId) for appId in appList]
-    multiplayerApps = list(filter(isTaggedMultiplayer, apps))
-    return [getGameInfo(appData) for appData in multiplayerApps]
+def getMultiplayerGames(appCacheOriginal, appList):
+    appCache = appCacheOriginal.copy()
+    cacheModified = False
+    gamesList = []
+    for appId in appList:
+        if str(appId) in appCache:
+            if appCache[str(appId)]["isMultiplayer"]:
+                gamesList.append(appCache[str(appId)])
+        else:
+            appData = getAppInfo(appId)
+            is_multiplayer = isTaggedMultiplayer(appData)
+            gameInfo = { "isMultiplayer": is_multiplayer }
+            if is_multiplayer:
+                gameInfo = getGameInfo(appData)
+                gameInfo["isMultiplayer"] = True
+                gamesList.append(gameInfo)
+
+            appCache[str(appId)] = gameInfo
+            cacheModified = True
+    
+    if cacheModified:
+        # Overwrite cache
+        print("Overwriting Cache")
+        with open('app_cache.json', 'w') as outfile:
+            json.dump(appCache, outfile)
+    return gamesList
 
 default_gameInfo = {
     "Online": "4",
