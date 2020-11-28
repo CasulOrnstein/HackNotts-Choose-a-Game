@@ -1,11 +1,18 @@
 import './FriendsPage.css';
+import { useState } from 'react'
 
-function FriendBox({imageSrc}) {
+function FriendBox({imageSrc, name, id, handleToggle}) {
+  const [isSelected, setSelectedState] = useState(false)
+
+  const toggleState = () => {
+    setSelectedState(!isSelected);
+    handleToggle(id)
+  }
+
   return (
-    <div className='FriendBox'>
+    <div className='FriendBox' onClick={toggleState} style={isSelected ? { backgroundColor: 'green'} : {} }>
       <img src={imageSrc} className="Image"/>
-      <div className='FriendBoxText'>Name</div>
-
+      <div className='FriendBoxText'>{name}</div>
     </div>
   )
 }

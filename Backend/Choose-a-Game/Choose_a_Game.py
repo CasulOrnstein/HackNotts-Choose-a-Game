@@ -1,5 +1,6 @@
 import flask
 from flask import request, jsonify
+from flask_cors import CORS, cross_origin
 import requests
 import json
 from steam.steamid import SteamID
@@ -13,10 +14,13 @@ from steamUtils.getMultiplayerGames import getMultiplayerGames
 from getUsersNames import getUsersNames
 
 app = flask.Flask(__name__)
+cors = CORS(app)
+app.config['CORS_HEADERS'] = 'Content-Type'
 app.config["DEBUG"] = True
 
 # A route to return all of the available entries in our catalog.
 @app.route('/api/friends', methods=['GET'])
+@cross_origin()
 def getFriends():
     if 'name' in request.args:
         name = request.args['name']
@@ -31,6 +35,7 @@ def getFriends():
     return jsonify(getUsersFriends(apiKey, name, includeOffline))
 
 @app.route('/api/games', methods=['GET'])
+@cross_origin()
 def getGames():
     friends = []
     if 'friends' in request.args:
