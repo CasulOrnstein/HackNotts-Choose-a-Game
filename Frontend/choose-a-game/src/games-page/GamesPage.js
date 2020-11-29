@@ -1,5 +1,6 @@
 import './GamesPage.css';
 import GamesBox from './GamesBox.js';
+import LoadingScreen from '../loading-screen/loading'
 import axios from 'axios'
 
 import {useEffect, useState} from 'react'
@@ -21,19 +22,14 @@ function GamesPage(props) {
 
   if (gamesList === undefined) {
     return (
-      <div>Loading</div>
+      <LoadingScreen text="Finding games for you all to play!"/>
     );
   }
 
   const mappedList = gamesList.map(game => game[0])
   return (
     <div className='GamesPageContainer'>
-      {!Array.isArray(gamesList) ? (
-        <div>
-          No games found :(
-        </div>
-      ) : (
-        mappedList.map(game => <GamesBox
+      {mappedList.map(game => <GamesBox
           ImageSrc={game.game.headerImage}
           name={game.game.name}
           url={game.game.url}
@@ -42,8 +38,7 @@ function GamesPage(props) {
           maxOnlinePlayers={game.game.maxOnlinePlayers}
           players={game.playerNames}
         />)
-      )}
-      
+      }
     </div>
   );
 }

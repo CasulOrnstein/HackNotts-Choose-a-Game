@@ -2,6 +2,7 @@ import './FriendsPage.css';
 import FriendsSelector from './FriendsSelector';
 import NextButton from './NextButton';
 import axios from 'axios'
+import LoadingScreen from '../loading-screen/loading'
 
 import {useEffect, useState} from 'react'
 
@@ -23,14 +24,14 @@ function FriendsPage(props) {
       const result = await axios(
         `http://127.0.0.1:5000/api/friends?name=${accountName}`,
       );
-      setData(result.data);
+      setData(result.data.friends);
+      setSelectedFriends([...selectedFriends, result.data.thisuserid.toString()])
     };
- 
     fetchData();
   }, [accountName]);
   if (friendsList === undefined) {
     return (
-      <div>Loading</div>
+      <LoadingScreen text="Listing all your friends!"/>
     );
   }
 
