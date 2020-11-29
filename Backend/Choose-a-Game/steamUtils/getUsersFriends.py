@@ -35,5 +35,5 @@ def getUsersFriends(apiKey, userId, includeOffline = False):
 
     dictOut = {}
     dictOut['friends'] = friendsRet
-    dictOut['thisuserid'] = steamId
+    dictOut['thisuserid'] = str(steamId)
     return dictOut
