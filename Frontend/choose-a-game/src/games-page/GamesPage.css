@@ -3,17 +3,22 @@
   min-height: 100vh;
   display: flex;
   flex-direction: row;
-  align-items: center;
   font-size: calc(10px + 2vmin);
   color: white;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding-top: 5vh;
 }
 
 .GamesBoxContainer{
-  height: 30vh;
-  width: 50vw;
-  margin-top: 10vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  padding-left: 20px;
+  padding-right: 20px;
+  
+}
+
+.GamesLogo {
+  margin-bottom: 5vh;
 }
