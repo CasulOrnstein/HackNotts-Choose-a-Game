@@ -10,7 +10,7 @@ function FriendBox({imageSrc, name, id, handleToggle}) {
   }
 
   return (
-    <div className='FriendBox' onClick={toggleState} style={isSelected ? { backgroundColor: 'green'} : {} }>
+    <div className='FriendBox' onClick={toggleState} style={isSelected ? { backgroundColor: '#2a80ed'} : {} }>
       <img src={imageSrc} className="Image"/>
       <div className='FriendBoxText'>{name}</div>
     </div>

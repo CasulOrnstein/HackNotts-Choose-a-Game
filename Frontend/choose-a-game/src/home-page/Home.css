@@ -23,6 +23,10 @@
   width: 60%;
 }
 
+.TitleContainer {
+  color: white;
+}
+
 .EnterButtonContainer {
   height: 10vh;
   width: 10vw;
@@ -34,7 +38,7 @@
 }
 
 .EnterButton {
-background-color: green;
+background-color: #1aa9f9;
 border: none;
 color: white;
 padding: 15px 32px;
@@ -55,7 +59,7 @@ border-radius: 5px;
   display: flex;
   align-items: center;
   justify-content: center;
-  color: black;
+  color: white;
 }
 
 .SteamIDForm {
@@ -67,3 +71,4 @@ border-radius: 5px;
 .InputLabel {
   margin-right: 5vh;
 }
+

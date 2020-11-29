@@ -4,7 +4,7 @@ import SteamLogo from '../images/steamlogo.png';
 function Logo() {
   return ( 
     <div className='LogoContainer'>
-     <img src={SteamLogo} alt="Choose a Game Logo" className='Logo'/>
+     <img src={SteamLogo} alt="Steam Logo" className='Logo'/>
     </div>
   )
 }

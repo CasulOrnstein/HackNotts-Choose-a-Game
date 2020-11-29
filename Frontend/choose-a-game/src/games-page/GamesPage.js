@@ -25,7 +25,7 @@ function GamesPage(props) {
     );
   }
 
-  const mappedList = gamesList.map(game => game[0].game)
+  const mappedList = gamesList.map(game => game[0])
   return (
     <div className='GamesPageContainer'>
       {!Array.isArray(gamesList) ? (
@@ -34,12 +34,13 @@ function GamesPage(props) {
         </div>
       ) : (
         mappedList.map(game => <GamesBox
-          ImageSrc={game.headerImage}
-          name={game.name}
-          url={game.url}
-          maxComboPlayers={game.maxComboPlayers}
-          maxCouchPlayers={game.maxCouchPlayers}
-          maxOnlinePlayers={game.maxOnlinePlayers}
+          ImageSrc={game.game.headerImage}
+          name={game.game.name}
+          url={game.game.url}
+          maxComboPlayers={game.game.maxComboPlayers}
+          maxCouchPlayers={game.game.maxCouchPlayers}
+          maxOnlinePlayers={game.game.maxOnlinePlayers}
+          players={game.playerNames}
         />)
       )}
       
