@@ -26,29 +26,19 @@ function GamesPage(props) {
     );
   }
 
-
- 
-  if(!Array.isArray(gamesList)){
-    return(
-    <div>
-      No games found :(
-    </div>
-    )
-  }
-
-  const mappedList = gamesList.map(game => game[0].game)
+  const mappedList = gamesList.map(game => game[0])
   return (
     <div className='GamesPageContainer'>
       {mappedList.map(game => <GamesBox
-          ImageSrc={game.headerImage}
-          name={game.name}
-          url={game.url}
-          maxComboPlayers={game.maxComboPlayers}
-          maxCouchPlayers={game.maxCouchPlayers}
-          maxOnlinePlayers={game.maxOnlinePlayers}
+          ImageSrc={game.game.headerImage}
+          name={game.game.name}
+          url={game.game.url}
+          maxComboPlayers={game.game.maxComboPlayers}
+          maxCouchPlayers={game.game.maxCouchPlayers}
+          maxOnlinePlayers={game.game.maxOnlinePlayers}
+          players={game.playerNames}
         />)
       }
-      
     </div>
   );
 }
