@@ -26,15 +26,20 @@ function GamesPage(props) {
     );
   }
 
+
+ 
+  if(!Array.isArray(gamesList)){
+    return(
+    <div>
+      No games found :(
+    </div>
+    )
+  }
+
   const mappedList = gamesList.map(game => game[0].game)
   return (
     <div className='GamesPageContainer'>
-      {!Array.isArray(gamesList) ? (
-        <div>
-          No games found :(
-        </div>
-      ) : (
-        mappedList.map(game => <GamesBox
+      {mappedList.map(game => <GamesBox
           ImageSrc={game.headerImage}
           name={game.name}
           url={game.url}
@@ -42,7 +47,7 @@ function GamesPage(props) {
           maxCouchPlayers={game.maxCouchPlayers}
           maxOnlinePlayers={game.maxOnlinePlayers}
         />)
-      )}
+      }
       
     </div>
   );

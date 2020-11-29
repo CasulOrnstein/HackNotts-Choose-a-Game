@@ -24,9 +24,9 @@ function FriendsPage(props) {
       const result = await axios(
         `http://127.0.0.1:5000/api/friends?name=${accountName}`,
       );
-      setData(result.data);
+      setData(result.data.friends);
+      setSelectedFriends([...selectedFriends, result.data.thisuserid.toString()])
     };
- 
     fetchData();
   }, [accountName]);
   if (friendsList === undefined) {
