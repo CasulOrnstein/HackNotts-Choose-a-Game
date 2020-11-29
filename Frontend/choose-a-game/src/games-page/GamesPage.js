@@ -37,6 +37,7 @@ function GamesPage(props) {
           maxCouchPlayers={game.game.maxCouchPlayers}
           maxOnlinePlayers={game.game.maxOnlinePlayers}
           players={game.playerNames}
+          friends={friends}
         />)
       }
     </div>

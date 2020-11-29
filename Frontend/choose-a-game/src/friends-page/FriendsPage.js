@@ -37,6 +37,7 @@ function FriendsPage(props) {
 
   return (
     <div className='FriendsPageContainer'>
+      <div style={{paddingTop:'5vh', fontSize:'25pt'}}>Select friends you want to play with!</div>
       <FriendsSelector friendsList={friendsList} handleToggle={addRemoveFriendId}/>
       <NextButton selectedFriends={selectedFriends}/>
     </div>
